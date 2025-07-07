@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<meta charset="UTF-8">
+	<title th:text="${author.name + ' ' + author.surname}">Dettaglio Autore</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/author.css}">
+
+</head>
+
+<body class="books-body bg-pattern fade-in">
+
+	<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container-fluid">
+			<a class="navbar-brand d-flex align-items-center" th:href="@{/}">
+				<img th:src="@{/images/siwbookslogo.png}" alt="Logo" width="70" height="70" class="me-2">
+			</a>
+			<div class="collapse navbar-collapse justify-content-end">
+
+				<ul class="navbar-nav align-items-center">
+
+					<!-- Se NON autenticato -->
+					<li class="nav-item me-2" sec:authorize="!isAuthenticated()">
+						<a class="btn btn-navbar" th:href="@{/login}">Login</a>
+					</li>
+					<li class="nav-item me-2" sec:authorize="!isAuthenticated()">
+						<a class="btn btn-navbar" th:href="@{/register}">Registrati</a>
+					</li>
+					<li class="nav-item me-2" sec:authorize="!isAuthenticated()">
+						<a class="btn btn-navbar-icon" th:href="@{/}">
+							<i class="bi bi-house-door-fill"></i>
+						</a>
+					</li>
+
+					<!-- Utente autenticato -->
+					<li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+						<a class="btn btn-navbar-icon dropdown-toggle" href="#" id="userDropdown" role="button"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="bi bi-person-circle"></i>
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+							<li><a class="dropdown-item" th:href="@{/personalArea}">Area Personale</a></li>
+							<li>
+								<form th:action="@{/logout}" method="post" class="d-inline">
+									<button type="submit" class="dropdown-item">Logout</button>
+								</form>
+							</li>
+						</ul>
+					</li>
+					<li class="nav-item me-2" sec:authorize="isAuthenticated()">
+						<a class="btn btn-navbar-icon" th:href="@{/}">
+							<i class="bi bi-house-door-fill"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<!-- Contenuto autore -->
+	<div class="author-detail-container">
+		<div class="author-card">
+			<div class="row g-4 align-items-center">
+				<!-- Immagine autore -->
+				<div class="col-md-4 text-center">
+					<img th:src="@{${author.imagePath}}" alt="Foto autore" class="img-fluid author-cover">
+				</div>
+
+				<!-- Dati autore -->
+				<div class="col-md-8">
+					<h2 class="text-primary mb-3" th:text="${author.name + ' ' + author.surname}">Nome Cognome</h2>
+
+					<p class="author-label">Data di nascita</p>
+					<p th:text="${author.dateOfBirth}"></p>
+
+					<div th:if="${author.dateOfDeath != null}">
+						<p class="author-label">Data di morte</p>
+						<p th:text="${author.dateOfDeath}"></p>
+					</div>
+
+					<p class="author-label">Nazionalità</p>
+					<p th:text="${author.nationality}"></p>
+
+					<p class="description-label">Descrizione</p>
+					<p class="author-description" th:text="${author.description}"></p>
+
+					<a th:href="@{/authors}" class="btn btn-outline-primary mt-4">Torna al catalogo autori</a>
+
+				</div>
+			</div>
+
+			<!-- Libri dell'autore -->
+			<div class="mt-5">
+				<h4 class="text-secondary mb-3">Libri di questo autore</h4>
+				<div class="row row-cols-2 row-cols-md-4 g-3">
+					<div class="col" th:each="book : ${author.books}">
+						<a th:href="@{'/book/' + ${book.id}}" class="text-decoration-none text-center d-block">
+							<img th:src="${book.getImagePath(book.coverImageFileName)}"
+								class="img-fluid author-book-cover" alt="Copertina libro">
+							<div class="mt-2 fw-semibold text-dark" th:text="${book.title}">Titolo</div>
+						</a>
+					</div>
+				</div>
+				<div th:if="${author.books == null or #lists.isEmpty(author.books)}" class="text-muted mt-3">
+					Nessun libro disponibile per questo autore.
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<footer class="bg-primary text-white text-center py-3 mt-5">
+		<small>&copy; 2025 SIW Books - Tutti i diritti riservati</small>
+	</footer>
+
+</body>
+
+</html>

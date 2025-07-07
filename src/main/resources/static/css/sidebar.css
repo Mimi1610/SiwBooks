@@ -1,0 +1,167 @@
+:root {
+	--sidebar-width: 250px;
+	--primary-color: #1e3a8a;
+	--primary-light: #2563eb;
+	--primary-dark: #0b5ed7;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Times New Roman', Times, serif;
+	background-image: url('/images/sky.jpg');
+	display: flex;
+	width: 100vw;
+	overflow-x: hidden;
+	background-color: #1e3a8a;
+	color:#1e3a8a;
+}
+
+/* === SIDEBAR === */
+.sidebar {
+	width: var(--sidebar-width);
+	min-height: 100%;
+	background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+	padding-top: 1rem;
+	color: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	overflow-y: auto;
+	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+}
+
+.sidebar .logo {
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+.sidebar .logo img {
+	width: 100px;
+	height: auto;
+	filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.sidebar a {
+	color: white;
+	display: block;
+	padding: 0.75rem 1.25rem;
+	text-decoration: none;
+	font-weight: 500;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar a:hover {
+	background-color: var(--primary-dark);
+	transform: translateX(2px);
+}
+
+.sidebar a.active-link {
+	background-color: var(--primary-dark);
+	font-weight: bold;
+	border-left: 4px solid white;
+}
+
+.sidebar form {
+	padding: 1rem;
+}
+
+.sidebar button {
+	width: 100%;
+	border-radius: 20px;
+}
+
+/* === CONTENUTO PRINCIPALE === */
+.form-card {
+	background-color: #ffffff;
+	border-radius: 20px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+	max-width: 900px;
+	margin: 0 auto;
+	margin-top: 1rem;
+	margin-bottom: 2rem;
+	color: black;
+}
+
+.content {
+	margin-left: var(--sidebar-width);
+	padding: 2rem;
+	width: calc(100vw - var(--sidebar-width));
+	min-height: 100vh;
+	
+	/*background-color: #f8f9fa;*/
+}
+
+.content h2 {
+	margin-bottom: 1.5rem;
+	color: var(--primary-color);
+	font-weight: 600;
+	color: white;
+}
+
+/* === TABELLA === */
+.table-wrapper {
+	width: 100%;
+	background: white;
+	padding: 1.5rem;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+	overflow-x: auto;
+}
+
+.table {
+	margin: 0;
+	width: 100%;
+}
+
+.table th {
+	background-color: #e9ecef;
+	color: var(--primary-color);
+	font-weight: 600;
+	text-align: left;
+}
+
+.table td {
+	vertical-align: middle;
+}
+
+/* === IMMAGINI LIBRO === */
+.book {
+	max-width: 140px;
+	height: auto;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.extra-image {
+    transition: transform 0.2s ease;
+}
+.extra-image:hover {
+    transform: scale(1.05);
+}
+
+
+/* Animazione fade-in */
+.fade-in {
+    animation: fadeIn 0.6s ease-out both;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
